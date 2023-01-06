@@ -1,17 +1,14 @@
 <template>
   <div  @scroll="scrolling()" class="scroll">
     <div ref="scrollTab" class="product__tab">
-<p  @click="scrollTo('sushi')" :class='{active: selected && choosen === "sushi"}'>Sushi</p> 
-<p  @click="scrollTo('gamburger')" :class='{active: selected && choosen === "gamburger"}'>Gamburger</p> 
-<p  @click="scrollTo('plove')"  :class='{active: selected && choosen === "plove"}'>Plove</p> 
-<p  @click.prevent="scrollTo('salad')"  :class='{active: selected && choosen === "salad"}'>Salad</p> 
-<p  @click="scrollTo('bread')"  :class='{active: selected && choosen === "bread"}'>Bread</p> 
-<p  @click="scrollTo('cake')"  :class='{active: selected && choosen === "cake"}'>Cake</p> 
-<p  @click="scrollTo('samsa')"  :class='{active: selected && choosen === "samsa"}'>Samsa</p> 
-<p  @click="scrollTo('cola')"  :class='{active: selected && choosen === "cola"}'>Cola</p>  
+<p :class="category.category"  ref="title" @click="scrollTo(category.category)" v-for="category in categories" :key="category">
+  <a :href="'#' + category.category">
+    {{ category.title }}
+  </a>
+</p> 
 </div>
-<div class="products">
-  <div :id="product.category" :ref="index" class="product" v-for="(product, index) in products" :key="index">
+<div ref="products" class="products">
+  <div :id="product.category" ref="product" class="product" v-for="(product, index) in products"  :key="index">
     <img :src="product.img" alt="">
     <h1 :ref="index">{{ product.title }}</h1>
     <p>{{ product.description }}</p>
@@ -30,7 +27,44 @@ data(){
     changeValue: 'sushi',
     activeLink: null,
     choosen: 'sushi',
-    wrapItem: 'sushi',
+    wrapItem: null,
+    activeIndex: null,
+    categories: [
+{
+  "title": "Sushi",
+  "category": "sushi",
+  "class": "active"
+},
+{
+  "title": "Gamburger",
+  "category": "gamburger"
+},
+{
+  "title": "Plove",
+  "category": "plove"
+},
+{
+  "title": "Salad",
+  "category": "salad"
+},
+{
+  "title": "Bread",
+  "category": "bread"
+},
+{
+  "title": "Cake",
+  "category": "cake"
+},
+{
+  "title": "Samsa",
+  "category": "samsa"
+},
+{
+  "title": "Cola",
+  "category": "cola"
+},
+
+    ],
     products: [
       {
         title: "Sushi",
@@ -337,182 +371,52 @@ data(){
     ]
   }
 },
-watch: {
-//   selected(){
-//     if(this.selected === 'plove'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft -= 90
-// } 
-// if(this.selected === 'gamburger'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 180
-// } 
-// if(this.selected === 'sushi'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft -= 90
-// } 
-//   if(this.selected === 'salad'){
-      
-//     const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 90
-//        scroll.scrollLeft -= 90
-//        console.log(this.choosen)
-//        console.log(this.selected)
-// }
-// if(this.selected === 'bread'){ 
-//   const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 80  
-//   } 
-//   if(this.selected === 'cake'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 90  
-//   }
-//   if(this.selected === 'samsa'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 90  
-//   } 
-// },
-choosen(){
-//       if(this.choosen === 'plove'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft -= 90
-// } 
-// if(this.choosen === 'gamburger'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 180
-// } 
-// if(this.choosen === 'sushi'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft -= 90
-// } 
-//   if(this.choosen === 'salad'){
-      
-//     const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 90
-//        scroll.scrollLeft -= 90
-//        console.log(this.choosen)
-//        console.log(this.selected)
-// }
-// if(this.choosen === 'bread'){ 
-//   const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 80  
-//   } 
-//   if(this.choosen === 'cake'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 90  
-//   }
-//   if(this.choosen === 'samsa'){
-//       const scroll = this.$refs.scrollTab;
-//        scroll.scrollLeft += 90  
-//   } 
-if(this.choosen === 'plove'){
-      const scroll = this.$refs.scrollTab;
-       scroll.scrollLeft -= 90
-       if(this.selected && this.choosen === 'plove'){
-      const scroll = this.$refs.scrollTab;
-    scroll.scrollLeft -= 90
-    }
 
-  }
-if(this.choosen === 'gamburger'){
-      const scroll = this.$refs.scrollTab;
-       scroll.scrollLeft -= 90
-       if(this.selected && this.choosen === 'gamburger'){
-      const scroll = this.$refs.scrollTab;
-    scroll.scrollLeft -= 90
-    }
-
-  }
-if(this.choosen === 'sushi'){
-      const scroll = this.$refs.scrollTab;
-       scroll.scrollLeft -= 90
-       if(this.selected && this.choosen === 'salad'){
-      const scroll = this.$refs.scrollTab;
-    scroll.scrollLeft -= 90
-    }
-} 
-  if(this.choosen === 'salad'){
-    const scroll = this.$refs.scrollTab;
-    scroll.scrollLeft += 90
-    scroll.scrollLeft -= 90
-    if(this.selected && this.choosen === 'salad'){
-      const scroll = this.$refs.scrollTab;
-    scroll.scrollLeft += 90
-    scroll.scrollLeft -= 90
-      console.log(this.choosen)
-      console.log(this.selected)
-    }
-}
-if(this.choosen === 'bread'){ 
-  const scroll = this.$refs.scrollTab;
-  scroll.scrollLeft += 90  
-  if(this.selected && this.choosen === 'bread'){
-      const scroll = this.$refs.scrollTab;
-      scroll.scrollLeft += 80  
-    }
-  } 
-  if( this.choosen === 'cake'){ 
-  const scroll = this.$refs.scrollTab;
-  scroll.scrollLeft += 90  
-  if(this.selected && this.choosen === 'cake'){
-      const scroll = this.$refs.scrollTab;
-      scroll.scrollLeft += 90  
-    }
-  }
-  if(this.choosen === 'cola'){ 
-  const scroll = this.$refs.scrollTab;
-  scroll.scrollLeft += 80  
-  if(this.selected && this.choosen === 'cola'){
-      const scroll = this.$refs.scrollTab;
-      scroll.scrollLeft += 80  
-    }
-  }
-},
-},
 methods: {
   handleScroll () {
-    if(window.scrollY <= 900){
-    this.choosen = 'sushi'
-  }else if(window.scrollY <= 1900){
-    this.choosen = 'gamburger'
-  } else if(window.scrollY <= 2800){
-    this.choosen = 'plove'
+  var current = ""
+ const productList =  document.querySelectorAll('.product')
+  productList.forEach((item) => {
+  const sectionTop = item.offsetTop
+  if(pageYOffset >= sectionTop - 180){
+    current = item.getAttribute("id");
+  }
+})
+this.$refs.title.forEach((li) => {
+  li.classList.remove("active");
+     if (li.classList.contains(current)) {
+    li.classList.add("active");
+    this.activeIndex = this.$refs.title.indexOf(li)
+
+    if(this.activeIndex >= 0 ){
+     this.$refs.scrollTab.scrollLeft = li.offsetLeft 
+    } 
  
-   } else if(window.scrollY <= 3900){
-    this.choosen = 'salad'
-   }else if(window.scrollY <= 4700){
-    this.choosen = 'bread'
-   } else if(window.scrollY <= 5800){
-    this.choosen = 'cake'
-  }  else if(window.scrollY <= 6700){
-    this.choosen = 'samsa'
-  }  else if(window.scrollY <= 7800){
-    this.choosen = 'cola'
-   }
-  },
+    }
+  });
+
+},
   scrollTo(id){           
-    this.selected = id
-    window.addEventListener('scroll', this.handleScroll);
-    // this.selected = value
     document.getElementById(id).scrollIntoView({
       behavior: "smooth"
     });
   },
 
 },
+
 created(){
+  // this.scrollTo()
   window.addEventListener('scroll', this.handleScroll);
 },
 updated(){
-  this.handleScroll()
+this.scrollTo()
+  window.addEventListener('scroll', this.handleScroll);
 },
-//  destroyed() {
+//  beforeDestroy() {
 //   window.removeEventListener('scroll', this.handleScroll);
 //   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
 
