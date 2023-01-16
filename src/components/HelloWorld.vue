@@ -1,23 +1,32 @@
 <template>
-  <div  @scroll="scrolling()" class="scroll">
-    <div ref="scrollTab" class="product__tab">
-<p :class="category.category"  ref="title" @click="scrollTo(category.category)" v-for="category in categories" :key="category">
-  <a :href="'#' + category.category">
+  <div class="scroll">
+    <div id="products_scrolled" ref="scrollTab" class="product__tab">
+<p class="scroll_h_item" ref="title"  @click="scroller"   v-for="category in categories" :key="category" :data-scrollto="category.category">
     {{ category.title }}
-  </a>
 </p> 
 </div>
-<div ref="products" class="products">
-  <div :id="product.category" ref="product" class="product" v-for="(product, index) in products"  :key="index">
-    <img :src="product.img" alt="">
-    <h1 :ref="index">{{ product.title }}</h1>
-    <p>{{ product.description }}</p>
-  </div>
+
+<div id="temp" class="temp">
+  <section  :id="product.category"   ref="products" class="products" v-for="product in filteredTitle" :key="product">
+    <h1 class="category">{{ product.category }}</h1>
+    <div style="display: flex; flex-wrap: wrap;">
+      <div ref="product" class="product" v-for="(item, index) in product.items" :key="index">
+        <img :src="item.img" alt="">
+        <h1 :ref="index">{{ item.title }}</h1>
+        <p>{{ item.description }}</p>
+      </div>
+    </div>
+  </section>
 </div>
-  </div>
+</div>
+
 </template>
 
 <script>
+// import { cp } from 'fs';
+
+
+
 
 
 export default {
@@ -29,6 +38,7 @@ data(){
     choosen: 'sushi',
     wrapItem: null,
     activeIndex: null,
+    filteredTitle: null,
     categories: [
 {
   "title": "Sushi",
@@ -371,51 +381,172 @@ data(){
     ]
   }
 },
+watch: {
+// selected(){
+//   window.addEventListener('scroll', this.handleScroll);
 
+// }
+},
 methods: {
-  handleScroll () {
-  var current = ""
- const productList =  document.querySelectorAll('.product')
-  productList.forEach((item) => {
-  const sectionTop = item.offsetTop
-  if(pageYOffset >= sectionTop - 180){
-    current = item.getAttribute("id");
-  }
-})
-this.$refs.title.forEach((li) => {
-  li.classList.remove("active");
-     if (li.classList.contains(current)) {
-    li.classList.add("active");
-    this.activeIndex = this.$refs.title.indexOf(li)
-
-    if(this.activeIndex >= 0 ){
-     this.$refs.scrollTab.scrollLeft = li.offsetLeft 
-    } 
- 
+  getItem(){
+console.log('BEGIN >>>')
+let nprods = [];
+let c_c;
+let tmp;
+for (let prod of this.products) {
+  if (!c_c) {
+     tmp = {
+      "category": prod.category,
+      "items" : [],
     }
-  });
-
-},
-  scrollTo(id){           
-    document.getElementById(id).scrollIntoView({
-      behavior: "smooth"
-    });
-  },
-
-},
-
-created(){
-  // this.scrollTo()
-  window.addEventListener('scroll', this.handleScroll);
-},
-updated(){
-this.scrollTo()
-  window.addEventListener('scroll', this.handleScroll);
-},
-//  beforeDestroy() {
-//   window.removeEventListener('scroll', this.handleScroll);
-//   }
+    c_c = prod.category;
+  }
+  if (c_c != prod.category) {
+    c_c = false;
+    nprods.push(tmp)
+  }
+  else if (c_c === prod.category) {
+    tmp.items.push({...prod});
+  }
 }
+nprods.push(tmp)
+this.filteredTitle = nprods 
+console.log(nprods);
+console.log("END>>>");
+
+  },
+  handleScroll (ev) {
+    console.log('heyy')
+    let se = document.getElementsByClassName('s_active')[0]
+    let he = document.getElementsByClassName('b_active')[0]
+    let s_s = se.getBoundingClientRect()
+    if (s_s.bottom < window.innerHeight / 2 && se.nextElementSibling) {
+        se.classList.remove('s_active')
+        he.classList.remove('b_active')
+        he.nextElementSibling.classList.add('b_active')
+
+        this.wrapItem.scrollTo({
+            left: he.nextElementSibling.offsetLeft,
+            behavior: 'smooth'
+        })
+
+        se.nextElementSibling.classList.add('s_active')
+    }
+    else if (s_s.top > window.innerHeight / 2 && se.previousElementSibling) {
+        se.classList.remove('s_active')
+        he.classList.remove('b_active')
+        he.previousElementSibling.classList.add('b_active')
+        se.previousElementSibling.classList.add('s_active')
+        this.wrapItem.scrollTo({
+            left: he.previousElementSibling.offsetLeft,
+            behavior: 'smooth'
+        })
+
+    }
+//   var current = ""
+//  const productList =  document.querySelectorAll('.products')
+//   productList.forEach((item) => {
+//   const sectionTop = item.offsetTop
+//   if(pageYOffset >= sectionTop - 180){
+//     current = item.getAttribute("id");
+
+//   }
+// })
+//     this.$refs.title.forEach((li) => {
+//       li.classList.remove("active");
+//       if (li.classList.contains(current)) {
+//       // console.log(li)
+//     li.classList.add("active");
+    
+//     // this.selected = li
+//     // this.activeIndex = this.$refs.title.indexOf(li)
+ 
+//   //  this.$refs.scrollTab.scrollTo({
+//   //   left: li.offsetLeft,
+//   //   behavior: 'smooth'
+//   //  })
+//   }
+//   });
+},
+scroller(ev){
+  console.log("TARFGET: " , ev.target)
+  let c_p = ev.target
+  let f = c_p.getAttribute('data-scrollto')
+  console.log("WE GOING TO :::", f)
+  let c_s = document.getElementById(f)
+
+
+  console.log("C_S:", c_s);
+
+  this.wrapItem.scrollTo({
+    left: c_p.offsetLeft,
+    behaviour: "smooth"
+  })
+
+  this.selected.scrollTo({
+        top: c_s.offsetTop - 30,
+        behavior: 'smooth'
+    })
+
+
+  let tmp = document.getElementsByClassName('s_active')[0]
+  tmp.classList.remove('s_active')
+
+  c_s.classList.add('s_active')
+
+
+  tmp = document.getElementsByClassName('b_active')[0]
+  tmp.classList.remove('b_active')
+  c_p.classList.add('b_active')  
+  console.log("C_P: ", c_p)
+
+  // console.log(c_s)
+  // let elem = document.getElementById(id); 
+  // let newEl = document.getElementsByClassName(id)[0]
+  // let tabProd = document.getElementsByClassName('product__tab')[0]
+  // console.log(elem, newEl, tabProd)
+  // tabProd.scrollTo({
+  //     left: newEl.offsetLeft,
+  //     behavior: 'smooth'
+  //   })
+  //   console.log('werfjni')
+  //   elem.scrollIntoView({
+  //       block: 'start',
+  //       behavior: "smooth"
+  //   });
+  //   console.log('123')
+  // },
+
+
+
+
+},
+
+},
+mounted(){
+  // console.log
+  this.getItem()
+  setTimeout(() => {
+    this.wrapItem = document.getElementById('products_scrolled')
+    let x = document.getElementById('temp')
+    x.addEventListener('scroll', this.handleScroll)
+    this.selected = document.getElementById('temp');  
+    let a_btns = document.querySelectorAll('.scroll_h_item')[0];
+  console.log("A_BTNS: ",a_btns)
+    a_btns.classList.add("b_active");
+    let a_sec =  document.querySelectorAll('.products')[0];
+    // console.log("A_SEC:", a_sec)
+    a_sec.classList.add('s_active');
+
+    // console.log(a_btns, a_sec, this.wrapItem)
+  }, 100);
+},
+destroyed(){
+//  window.removeEventListener('scroll', this.handleScroll);
+},
+
+}
+
 </script>
 <style scoped lang="scss">
 

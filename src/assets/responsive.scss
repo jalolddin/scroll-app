@@ -1,4 +1,24 @@
-.active {
+// * {
+//     scroll-behavior: smooth;
+// }
+body {
+    // transition-duration: 500ms;
+    font-family: sans-serif;
+    scroll-behavior: smooth;
+}
+
+// .s_active {
+//     background: blue;
+// }
+// .b_active {
+//     background-color: red;
+// }
+.temp {
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.b_active {
     background: lightgrey;
     // border-radius: 0.5rem;
     font-weight: 600;
@@ -32,24 +52,26 @@
 .scroll {
     display: flex;
     justify-content: flex-end;
+    scroll-behavior: smooth;
     .product__tab {
+        scroll-behavior: smooth;
         position: fixed;
         margin-right: 70%;
         margin-top: 2rem;
         background-color: black;
-        // word-wrap: break-word;
         height: 100%;
-        // padding: 1rem;
         border-radius: 0.5rem;
         width: 20rem;
         p {
             font-family: sans-serif;
             font-size: 2rem;
             cursor: pointer;
+            color: white;
             margin-top: 1.5rem;
-            a {
+            button {
                 text-decoration: none;
-                color: white;
+                background: none;
+                border: none;
             }
         }
     }
@@ -57,19 +79,15 @@
 
 @media screen and (max-width: 490px) {
     .scroll {
+        scroll-behavior: smooth;
         display: flex;
         flex-direction: column;
         width: 100%;
         background-color: black;
         -webkit-overflow-scrolling: touch;
-        // overflow-x: scroll;
+        overflow-y: auto;
         .product__tab {
-            // scroll-behavior: smooth;
-            // overflow-wrap: break-word;
-            // white-space: nowrap;
             overflow-x: auto;
-            // width: 100%;
-            // -webkit-overflow-scrolling: touch;
             flex-direction: row;
             margin: 0;
             top: 0;
@@ -87,12 +105,25 @@
                 padding: 1rem;
             }
         }
+        // #sushi {
+        //     background-color: red;
+        // }
         .products {
-            margin-top: 5rem;
+            // margin-top: 5rem;
+            scroll-behavior: smooth;
+            padding-top: 50px;
             width: 100%;
             display: flex;
-            justify-content: space-evenly;
-            div {
+            justify-content: flex-start;
+            scroll-padding-top: 50px;
+            .category {
+                margin-left: 5%;
+                color: white;
+                font-size: 2rem;
+                font-family: sans-serif;
+                text-transform: capitalize;
+            }
+            .product {
                 width: 35%;
                 padding: 0;
                 border-radius: 0.5rem;
@@ -100,6 +131,7 @@
                 padding: 0.5rem;
                 background-color: rgb(245 244 240);
                 h1 {
+                    font-weight: 600;
                     font-size: 1.5rem;
                 }
                 p {
