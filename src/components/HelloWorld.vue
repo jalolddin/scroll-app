@@ -404,7 +404,7 @@ console.log("END>>>");
 
   },
   handleScroll (ev) {
-    console.log('heyy')
+    let c_p = ev.target
     let se = document.getElementsByClassName('s_active')[0]
     let he = document.getElementsByClassName('b_active')[0]
     let s_s = se.getBoundingClientRect()
@@ -412,6 +412,8 @@ console.log("END>>>");
         se.classList.remove('s_active')
         he.classList.remove('b_active')
         he.nextElementSibling.classList.add('b_active')
+          // let x = document.getElementById('temp')
+  //   x.removeEventListener('scroll', this.handleScroll)
         this.wrapItem.scrollTo({
             left: he.nextElementSibling.offsetLeft,
             behavior: 'smooth'
@@ -440,8 +442,8 @@ scroller(ev){
 
 
   console.log("C_S:", c_s);
-  let x = document.getElementById('temp')
-    x.removeEventListener('scroll', this.handleScroll)
+  // let x = document.getElementById('temp')
+  //   x.removeEventListener('scroll', this.handleScroll)
   this.wrapItem.scrollTo({
     left: c_p.offsetLeft,
     behaviour: "smooth"
@@ -451,15 +453,9 @@ scroller(ev){
         top: c_s.offsetTop - 30,
         behavior: 'smooth'
     })
-setTimeout(() => {
-  x.addEventListener('scroll', this.handleScroll)
-}, 500)
   let tmp = document.getElementsByClassName('s_active')[0]
   tmp.classList.remove('s_active')
-
   c_s.classList.add('s_active')
-
-
   tmp = document.getElementsByClassName('b_active')[0]
   tmp.classList.remove('b_active')
   c_p.classList.add('b_active')  

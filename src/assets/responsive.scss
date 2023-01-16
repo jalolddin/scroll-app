@@ -84,12 +84,13 @@ body {
         .product__tab {
             z-index: 1;
             overflow-x: scroll;
+            scroll-behavior: smooth;
+            transition: 1.5s ease;
             flex-direction: row;
             margin: 0;
             top: 0;
             height: 5rem;
             border-radius: 0;
-            flex-wrap: nowrap;
             width: 100%;
             display: flex;
             align-items: center;
@@ -105,6 +106,7 @@ body {
         .temp {
             height: 100vh;
             overflow: scroll;
+            transition: ease .2s;
         }
         .products {
             padding-top: 50px;
