@@ -412,7 +412,6 @@ console.log("END>>>");
         se.classList.remove('s_active')
         he.classList.remove('b_active')
         he.nextElementSibling.classList.add('b_active')
-
         this.wrapItem.scrollTo({
             left: he.nextElementSibling.offsetLeft,
             behavior: 'smooth'
