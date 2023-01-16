@@ -79,7 +79,7 @@ body {
         flex-direction: column;
         width: 100%;
         background-color: black;
-        // -webkit-overflow-scrolling: touch;
+        -webkit-overflow-scrolling: touch;
         overflow-y: scroll;
         .product__tab {
             overflow-x: scroll;
