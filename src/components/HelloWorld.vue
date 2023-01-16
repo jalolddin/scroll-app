@@ -23,12 +23,6 @@
 </template>
 
 <script>
-// import { cp } from 'fs';
-
-
-
-
-
 export default {
 data(){
   return{
@@ -381,12 +375,6 @@ data(){
     ]
   }
 },
-watch: {
-// selected(){
-//   window.addEventListener('scroll', this.handleScroll);
-
-// }
-},
 methods: {
   getItem(){
 console.log('BEGIN >>>')
@@ -443,30 +431,6 @@ console.log("END>>>");
         })
 
     }
-//   var current = ""
-//  const productList =  document.querySelectorAll('.products')
-//   productList.forEach((item) => {
-//   const sectionTop = item.offsetTop
-//   if(pageYOffset >= sectionTop - 180){
-//     current = item.getAttribute("id");
-
-//   }
-// })
-//     this.$refs.title.forEach((li) => {
-//       li.classList.remove("active");
-//       if (li.classList.contains(current)) {
-//       // console.log(li)
-//     li.classList.add("active");
-    
-//     // this.selected = li
-//     // this.activeIndex = this.$refs.title.indexOf(li)
- 
-//   //  this.$refs.scrollTab.scrollTo({
-//   //   left: li.offsetLeft,
-//   //   behavior: 'smooth'
-//   //  })
-//   }
-//   });
 },
 scroller(ev){
   console.log("TARFGET: " , ev.target)
@@ -499,32 +463,10 @@ scroller(ev){
   tmp.classList.remove('b_active')
   c_p.classList.add('b_active')  
   console.log("C_P: ", c_p)
-
-  // console.log(c_s)
-  // let elem = document.getElementById(id); 
-  // let newEl = document.getElementsByClassName(id)[0]
-  // let tabProd = document.getElementsByClassName('product__tab')[0]
-  // console.log(elem, newEl, tabProd)
-  // tabProd.scrollTo({
-  //     left: newEl.offsetLeft,
-  //     behavior: 'smooth'
-  //   })
-  //   console.log('werfjni')
-  //   elem.scrollIntoView({
-  //       block: 'start',
-  //       behavior: "smooth"
-  //   });
-  //   console.log('123')
-  // },
-
-
-
-
 },
 
 },
 mounted(){
-  // console.log
   this.getItem()
   setTimeout(() => {
     this.wrapItem = document.getElementById('products_scrolled')
@@ -535,14 +477,10 @@ mounted(){
   console.log("A_BTNS: ",a_btns)
     a_btns.classList.add("b_active");
     let a_sec =  document.querySelectorAll('.products')[0];
-    // console.log("A_SEC:", a_sec)
     a_sec.classList.add('s_active');
-
-    // console.log(a_btns, a_sec, this.wrapItem)
   }, 100);
 },
 destroyed(){
-//  window.removeEventListener('scroll', this.handleScroll);
 },
 
 }
