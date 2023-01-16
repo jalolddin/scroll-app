@@ -440,7 +440,8 @@ scroller(ev){
 
 
   console.log("C_S:", c_s);
-
+  let x = document.getElementById('temp')
+    x.removeEventListener('scroll', this.handleScroll)
   this.wrapItem.scrollTo({
     left: c_p.offsetLeft,
     behaviour: "smooth"
@@ -450,8 +451,9 @@ scroller(ev){
         top: c_s.offsetTop - 30,
         behavior: 'smooth'
     })
-
-
+setTimeout(() => {
+  x.addEventListener('scroll', this.handleScroll)
+}, 500)
   let tmp = document.getElementsByClassName('s_active')[0]
   tmp.classList.remove('s_active')
 

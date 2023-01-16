@@ -82,6 +82,7 @@ body {
         -webkit-overflow-scrolling: touch;
         overflow-y: scroll;
         .product__tab {
+            z-index: 1;
             overflow-x: scroll;
             flex-direction: row;
             margin: 0;
@@ -92,7 +93,7 @@ body {
             width: 100%;
             display: flex;
             align-items: center;
-            position: fixed;
+            // position: fixed;
             gap: 1rem;
             p {
                 width: 50%;
@@ -103,7 +104,7 @@ body {
         }
         .temp {
             height: 100vh;
-            overflow-y: scroll;
+            overflow: scroll;
         }
         .products {
             padding-top: 50px;
